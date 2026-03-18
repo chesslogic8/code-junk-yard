@@ -1,0 +1,11 @@
+[package]
+name = "blowctr"
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.94"
+
+[dependencies]
+anyhow = "1"
+rand = "0.8"
+blowfish = "0.9"
+ctr = "0.9"

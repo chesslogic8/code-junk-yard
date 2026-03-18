@@ -1,0 +1,25 @@
+Create a small Linux command-line encryption tool written in Rust. The program should be simple, reliable, and deterministic. Each tool implements one cipher but all tools must behave the same way and follow the same file format and interface. The application should use a hard-coded key, accept a single file argument, encrypt files to the .ai extension, and decrypt .ai files back to the original file type. The original extension must be stored in metadata so the correct filename can be restored during decryption.
+
+The program must accept exactly one command argument: the name of the file to process. The usage format should look like ./toolname filename. For example: ./aes document.txt or ./aes document.ai. The program must not accept multiple arguments or interactive input. If no argument is given, it should return a usage error such as usage: aes <file>.
+
+The program should only operate on files located in the same directory as the executable. Paths containing directories such as /, ../, or nested folders must be rejected. This prevents the program from modifying files outside the working directory and keeps the behavior predictable. The argument should therefore be treated as a simple filename, not a path.
+
+The program determines whether to encrypt or decrypt based on the file extension. If the file extension is .ai, the program performs decryption. If the file extension is anything else, the program performs encryption. When encrypting a file, the output file must have the same base name but with the .ai extension. For example, file.txt becomes file.ai. When decrypting, the program must restore the original extension that was stored in the metadata so that file.ai becomes file.txt again.
+
+The original file extension must be stored as metadata in the encrypted file. The extension length should be stored as a single byte followed by the extension string itself. Extensions longer than 32 bytes should be rejected to keep the format simple and predictable.
+
+The encrypted file must store its metadata at the end of the file rather than at the beginning. The encrypted file layout should therefore be: ciphertext first, followed by a footer containing the metadata. Storing the metadata at the end helps avoid interfering with file signatures or executable headers and reduces the risk of breaking file formats if the file is inspected or partially processed.
+
+The footer format should follow a consistent structure. After the ciphertext, write a four-byte magic value that uniquely identifies the tool or cipher. After the magic value, write the extension length byte and the extension string. Then write the random nonce used for encryption. Finally write the original file size as an unsigned 64-bit integer. This produces a footer layout that looks like: ciphertext, magic value, extension length, extension string, nonce, and original size.
+
+Each encryption operation must generate a random nonce using the operating system random generator. The nonce size depends on the cipher being used. The nonce is stored in the footer so it can be used during decryption.
+
+Each tool must use a hard-coded symmetric key defined as a constant inside the program. The key size depends on the cipher, but it should typically be either 16 bytes or 32 bytes. The key is intentionally embedded directly in the source code to keep the program simple and deterministic.
+
+All file writes must be done using atomic replacement to prevent corruption if the program crashes. The program should first write the output to a temporary file using the same name but with a .tmp extension. After writing the file, it must call sync_all() to flush the contents to disk. Finally the temporary file should replace the final output file using a rename operation. This ensures that partially written files are never left behind.
+
+The program should read the entire input file into memory before processing it. The logic of the program should remain simple and avoid unnecessary complexity. The structure of the code should generally include a main() function that handles argument parsing and decides whether to call encrypt() or decrypt(), along with separate functions implementing the encryption and decryption logic.
+
+Every tool created under this system should share the same command behavior, file format structure, metadata footer layout, atomic file writing process, and same-directory safety rule. The only parts that change between tools are the cipher implementation, nonce size, key size, and the four-byte magic identifier used in the footer.
+
+This design allows many small encryption tools to exist that all behave identically from the user's perspective while using different cryptographic algorithms internally.
