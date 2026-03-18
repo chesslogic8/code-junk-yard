@@ -1,0 +1,9 @@
+[package]
+name = "aescrypt"
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+aes-gcm = "0.10"
+rand = "0.8"

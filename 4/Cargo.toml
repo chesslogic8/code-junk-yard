@@ -1,0 +1,17 @@
+[package]
+name = "filecrypt"
+version = "1.0.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1"
+
+serpent = "0.4"
+cipher = "0.3"
+
+hkdf = "0.12"
+hmac = "0.12"
+sha2 = "0.10"
+
+rand = "0.8"
+zeroize = "1.8"

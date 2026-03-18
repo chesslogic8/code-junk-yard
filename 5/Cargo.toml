@@ -1,0 +1,14 @@
+[package]
+name = "tf"
+version = "1.0.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1"
+cipher = "0.4"
+threefish = "0.5"
+rand = "0.8"
+hmac = "0.12"
+sha2 = "0.10"
+hkdf = "0.12"
+zeroize = "1.7"

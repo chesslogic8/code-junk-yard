@@ -1,0 +1,9 @@
+[package]
+name = "ascrypt"
+version = "1.0.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1"
+ascon-aead = "0.4"
+rand = "0.8"
