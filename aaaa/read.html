@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ironlock 🔐</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        :root {
+            --bg: #0a0a0a;
+            --text: #f1f1f1;
+            --accent: #00ff9d;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, sans-serif;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+        
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #222;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 35px;
+            margin-bottom: 15px;
+        }
+        
+        h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        pre {
+            background: #111;
+            color: #00ff9d;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            border: 1px solid #222;
+        }
+        
+        code {
+            font-family: 'Space Grotesk', monospace;
+            background: #1a1a1a;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #111;
+        }
+        
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid #222;
+        }
+        
+        th {
+            background: #1a1a1a;
+            font-weight: 600;
+        }
+        
+        ul {
+            padding-left: 25px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .badge {
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .note {
+            background: #1a2a1f;
+            border-left: 6px solid #00ff9d;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        
+        .footer {
+            margin-top: 80px;
+            padding-top: 30px;
+            border-top: 1px solid #222;
+            font-size: 0.95rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100">
+    <div class="max-w-4xl mx-auto px-6 py-12">
+
+        <!-- Header -->
+        <div class="flex items-center gap-3 mb-8">
+            <h1 class="text-5xl font-bold tracking-tight">Ironlock 🔐</h1>
+        </div>
+
+        <!-- Badges -->
+        <div class="flex flex-wrap gap-3 mb-10">
+            <img src="https://img.shields.io/crates/v/ironlock.svg" alt="Crates.io">
+            <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
+            <img src="https://img.shields.io/badge/rust-1.92%2B-orange.svg" alt="Rust">
+            <img src="https://github.com/christurgeon/ironlock/actions/workflows/ci.yml/badge.svg" alt="CI">
+        </div>
+
+        <p class="text-xl text-zinc-400 mb-12">
+            A secure file encryption CLI tool built in Rust. Ironlock uses industry-standard cryptographic primitives to protect your files with a password.
+        </p>
+
+        <!-- Installation -->
+        <h2 class="text-3xl font-semibold mb-6 border-b border-zinc-800 pb-4">Installation</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div>
+                <h3 class="text-xl font-medium mb-3">From crates.io (recommended)</h3>
+                <pre><code>cargo install ironlock</code></pre>
+            </div>
+            <div>
+                <h3 class="text-xl font-medium mb-3">From Source</h3>
+                <pre><code>git clone https://github.com/YOURUSERNAME/YOURFORK.git
+cd ironlock
+cargo build --release
+cp ./target/release/ironlock ~/.local/bin/</code></pre>
+            </div>
+        </div>
+
+        <!-- Quick Start -->
+        <h2 class="text-3xl font-semibold mb-6 border-b border-zinc-800 pb-4">Quick Start</h2>
+        <pre class="mb-12"><code># Encrypt a file (password prompt will appear)
+ironlock encrypt secret.txt
+# Creates: secret.il
+
+# Decrypt a file
+ironlock decrypt secret.il
+# Restores: secret.txt</code></pre>
+
+        <!-- Usage -->
+        <h2 class="text-3xl font-semibold mb-6 border-b border-zinc-800 pb-4">Usage</h2>
+
+        <!-- Encrypt -->
+        <h3 class="text-2xl font-medium mb-4">Encrypt Files</h3>
+        <pre class="mb-6"><code># Encrypt a single file
+ironlock encrypt secret.txt
+
+# Encrypt multiple files
+ironlock encrypt document.pdf image.png notes.md
+
+# Force overwrite of existing .il files
+ironlock encrypt secret.txt --force
+
+# Securely delete originals after encryption (3-pass random overwrite)
+ironlock encrypt secret.txt --shred
+
+# Combine flags
+ironlock encrypt secret.txt -f -s</code></pre>
+        <p class="mb-8">You'll be prompted to enter and confirm your password (hidden input):</p>
+        <pre class="mb-8"><code>🔐 Ironlock Encryption
+Enter password:
+Confirm password:
+Encrypting secret.txt ... ✓ → secret.il</code></pre>
+        <p class="mb-12 text-amber-300">Note: The original file extension is encrypted inside the .il file and will be restored on decryption. This hides the file type from observers.</p>
+
+        <!-- Decrypt -->
+        <h3 class="text-2xl font-medium mb-4">Decrypt Files</h3>
+        <pre class="mb-12"><code># Decrypt a single file
+ironlock decrypt secret.il
+
+# Decrypt to a specific directory
+ironlock decrypt secret.il --output ./decrypted/
+
+# Decrypt multiple files
+ironlock decrypt file1.il file2.il file3.il -o ./output/
+
+# Force overwrite of existing files
+ironlock decrypt secret.il --force</code></pre>
+
+        <!-- Directory -->
+        <h3 class="text-2xl font-medium mb-4">Directory Encryption</h3>
+        <p class="mb-4">Ironlock can recursively encrypt or decrypt entire directories, preserving the directory structure:</p>
+        <pre class="mb-12"><code># Encrypt all files in a directory
+ironlock encrypt ./my-folder/
+
+# Decrypt all .il files in a directory to an output location
+ironlock decrypt ./my-folder/ -o ./decrypted/
+
+# Encrypt a directory and securely delete the originals
+ironlock encrypt ./sensitive-docs/ --shred</code></pre>
+
+        <!-- Piping -->
+        <h3 class="text-2xl font-medium mb-4">Piping (Stdin/Stdout)</h3>
+        <pre class="mb-12"><code># Encrypt from stdin to a file
+cat secret.txt | ironlock encrypt > secret.il
+
+# Decrypt from stdin to a file
+cat secret.il | ironlock decrypt > secret.txt
+
+# Chain with other tools
+tar cf - ./docs/ | ironlock encrypt > docs.tar.il
+cat docs.tar.il | ironlock decrypt | tar xf -</code></pre>
+        <p class="mb-12">Password prompts are written to stderr, so they won't interfere with piped data.</p>
+
+        <!-- Aliases -->
+        <h3 class="text-2xl font-medium mb-4">Command Aliases</h3>
+        <table class="mb-12">
+            <thead>
+                <tr><th>Command</th><th>Aliases</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>encrypt</code></td><td><code>enc</code>, <code>e</code></td></tr>
+                <tr><td><code>decrypt</code></td><td><code>dec</code>, <code>d</code></td></tr>
+            </tbody>
+        </table>
+        <pre class="mb-12"><code>ironlock e secret.txt     # same as: ironlock encrypt secret.txt
+ironlock d secret.il -o out/   # same as: ironlock decrypt secret.il -o out/</code></pre>
+
+        <!-- Flags -->
+        <h3 class="text-2xl font-medium mb-6">Flags Reference</h3>
+        
+        <h4 class="font-medium mb-3">Encrypt</h4>
+        <table class="mb-12">
+            <thead>
+                <tr><th>Flag</th><th>Short</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>--force</code></td><td><code>-f</code></td><td>Overwrite existing .il files without prompting</td></tr>
+                <tr><td><code>--shred</code></td><td><code>-s</code></td><td>Securely delete originals after encryption (also --delete)</td></tr>
+                <tr><td><code>--progress</code></td><td><code>-p</code></td><td>Show a progress bar when processing multiple files</td></tr>
+            </tbody>
+        </table>
+
+        <h4 class="font-medium mb-3">Decrypt</h4>
+        <table class="mb-12">
+            <thead>
+                <tr><th>Flag</th><th>Short</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>--force</code></td><td><code>-f</code></td><td>Overwrite existing output files without prompting</td></tr>
+                <tr><td><code>--output &lt;DIR&gt;</code></td><td><code>-o</code></td><td>Output directory for decrypted files</td></tr>
+                <tr><td><code>--progress</code></td><td><code>-p</code></td><td>Show a progress bar when processing multiple files</td></tr>
+            </tbody>
+        </table>
+
+        <!-- Security -->
+        <h2 class="text-3xl font-semibold mb-6 border-b border-zinc-800 pb-4">Security</h2>
+        <p class="mb-6">Ironlock uses the following cryptographic primitives:</p>
+        <ul class="list-disc pl-8 space-y-3 mb-12 text-zinc-300">
+            <li><strong>Argon2id</strong> for password-based key derivation (64 MiB memory, 3 iterations, 4 parallelism)</li>
+            <li><strong>ChaCha20-Poly1305</strong> for authenticated encryption (256-bit keys, 96-bit nonces)</li>
+            <li><strong>Authenticated header</strong> — the file header is passed as AEAD associated data, preventing undetected tampering</li>
+            <li><strong>Secure memory handling</strong> via <code>zeroize</code> and <code>mlock</code> (prevents swap to disk on Unix)</li>
+            <li><strong>Secure deletion</strong> via <code>--shred</code> (3-pass random overwrite)</li>
+        </ul>
+        <p class="mb-8">KDF parameters are stored in the encrypted file header, allowing future upgrades without breaking existing files.</p>
+        <div class="bg-amber-950 border border-amber-800 rounded-xl p-6 text-amber-300">
+            <strong>Note:</strong> Ironlock currently loads entire files into memory. A warning is displayed for files over 1 GiB. For very large files, use stdin piping.
+        </div>
+
+        <!-- Development -->
+        <h2 class="text-3xl font-semibold mb-6 border-b border-zinc-800 pb-4 mt-16">Development</h2>
+        <p class="mb-6">This fork has been simplified to a <strong>single <code>src/main.rs</code></strong> file with all tests removed for faster iteration.</p>
+        <pre class="mb-12"><code># Run lints
+cargo clippy
+
+# Format code
+cargo fmt
+
+# Build release
+cargo build --release</code></pre>
+
+        <!-- Uninstall -->
+        <h2 class="text-3xl font-semibold mb-6 border-b border-zinc-800 pb-4">Uninstalling</h2>
+        <pre class="mb-12"><code>cargo uninstall ironlock</code></pre>
+
+        <!-- Footer -->
+        <div class="border-t border-zinc-800 pt-8 text-sm text-zinc-500 flex flex-col gap-2">
+            <p>MIT License — see <strong>LICENSE</strong> for details.</p>
+            <p>This fork uses a single-file <code>src/main.rs</code> implementation with tests removed for rapid development.</p>
+            <p class="text-zinc-400">Built with ❤️ and zero bloat.</p>
+        </div>
+
+    </div>
+</body>
+</html>
