@@ -1,4 +1,4 @@
-tical Bug (Needs Fix Before Next Release)
+critical Bug (Needs Fix Before Next Release)
 Directory decryption is broken for any folder containing non-.il files.
 
 count_files(&files, true)filters for .il files when building the progress bar.
