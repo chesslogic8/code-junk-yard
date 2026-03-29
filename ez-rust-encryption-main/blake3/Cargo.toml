@@ -1,0 +1,9 @@
+[package]
+name = "blake3"
+version = "1.0.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1"
+blake3 = "1"
+rand = "0.8"

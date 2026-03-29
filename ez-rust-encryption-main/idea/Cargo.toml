@@ -1,0 +1,18 @@
+[package]
+name = "idea"
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.94"
+
+[dependencies]
+anyhow = "1"
+rand = "0.8"
+idea = "0.5"
+ctr = "0.9"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

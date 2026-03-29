@@ -1,0 +1,11 @@
+[package]
+name = "cam"
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.94.1"
+
+[dependencies]
+anyhow = "1"
+rand = "0.8"
+camellia = "0.1"
+ctr = "0.9"

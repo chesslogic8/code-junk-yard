@@ -1,0 +1,12 @@
+[package]
+name = "rc6"
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.94.1"
+
+[dependencies]
+anyhow = "1"
+rand = "0.8"
+rc6_rs = "0.1"
+ctr = "0.9"
+cipher = "0.4"

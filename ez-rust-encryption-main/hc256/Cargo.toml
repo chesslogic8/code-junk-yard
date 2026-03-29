@@ -1,0 +1,10 @@
+[package]
+name = "hc256"
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.94.1"
+
+[dependencies]
+anyhow = "1"
+rand = "0.8"
+hc-256 = "0.5"

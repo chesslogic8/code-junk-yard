@@ -1,0 +1,11 @@
+[package]
+name = "salsa"
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.94.1"
+
+[dependencies]
+anyhow = "1"
+rand = "0.8"
+salsa20 = "0.10"
+cipher = "0.4"
